@@ -1,6 +1,41 @@
-<h1>make book</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Make an EBook!</title>
+<!-- Bootstrap -->
+<link href="http://41j.com/bs/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 
+<style type="text/css">
+	#myinnercontainer { position:absolute; top:35%; left:25%; right:25%; height:10em; margin-top:-5em }
+</style>
+
+<div id="myinnercontainer" class="hero-unit">
+<center>
+<h1>make an ebook!</h1>
 <form action="/down/{{.Title}}" method="POST">
-<div><textarea name="booktitle" rows="2" cols="80">{{printf "%s" .Body}}</textarea></div>
-<div><input type="submit" value="make book"></div>
+<div><input type="text" value="title" name="booktitle" \></div>
+<div><input type="submit" value="make book" class="btn" \></div>
 </form>
+</center>
+</div>
+
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-9449433064496325";
+/* makebookleader */
+google_ad_slot = "1904687916";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</center>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="http://41j.com/bs/js/bootstrap.min.js"></script>
+</body>
+</html>
