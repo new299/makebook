@@ -1,0 +1,6 @@
+<h1>make book</h1>
+
+<form action="/down/{{.Title}}" method="POST">
+<div><textarea name="booktitle" rows="2" cols="80">{{printf "%s" .Body}}</textarea></div>
+<div><input type="submit" value="make book"></div>
+</form>
