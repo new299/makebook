@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"os"
 	"io"
+	"os/exec"
+	"strings"
 )
 
 type Page struct {
@@ -17,6 +19,35 @@ type Page struct {
 
 func makebook(bookname string) error {
 	filename := bookname + ".epub"
+
+	search := strings.Replace(bookname, " ", "%20", -1)
+
+  cmdargs := "http://en.wikipedia.org/w/index.php?title=Special%3ASearch&profile=default&search=" + search + "&fulltext=Search"
+  cmd := exec.Command("curl",cmdargs)
+  out,e := cmd.Output()
+
+	s := string(out);
+  re := regexp.MustCompile(`mw-search-result-heading'><a href="[A-Za-z0-9_//]+"`)
+  searchres := re.FindAllStringSubmatch(s,10)
+
+ 	trimlen := len("mw-search-result-heading'><a href=\"/wiki/")
+
+  exec.Command("mkdir",bookname).Output()
+  exec.Command("cd",bookname).Output() 
+
+  for i := 0; i < len(searchres); i++ {
+		current := string(searchres[i][0])
+
+  	url := "http://en.wikipedia.org/w/index.php?title=" + current[trimlen:len(current)-1] + "&printable=yes"
+
+    fmt.Println(url);
+    wgetcmd := exec.Command("wget",url)
+		wgetout,e := wgetcmd.CombinedOutput()
+		fmt.Println(string(wgetout))
+    if e != nil { fmt.Println(e); }
+  }
+
+  if e != nil {fmt.Println(e);}
 
   fmt.Println("writing: " + filename);
 	f, err := os.Create(filename)
