@@ -33,15 +33,16 @@ func makebook(bookname string) error {
  	trimlen := len("mw-search-result-heading'><a href=\"/wiki/")
 
   exec.Command("mkdir",bookname).Output()
-  exec.Command("cd",bookname).Output() 
 
   for i := 0; i < len(searchres); i++ {
 		current := string(searchres[i][0])
 
+    pagename := current[trimlen:len(current)-1]
   	url := "http://en.wikipedia.org/w/index.php?title=" + current[trimlen:len(current)-1] + "&printable=yes"
 
     fmt.Println(url);
-    wgetcmd := exec.Command("wget",url)
+    wgetcmd := exec.Command("wget","-p","-k",url,"-O",pagename + ".html")
+		wgetcmd.Dir = bookname
 		wgetout,e := wgetcmd.CombinedOutput()
 		fmt.Println(string(wgetout))
     if e != nil { fmt.Println(e); }
