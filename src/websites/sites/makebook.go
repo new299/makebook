@@ -1,4 +1,4 @@
-package main
+package sites
 
 import (
 	"html/template"
@@ -74,7 +74,7 @@ func loadPage(title string) (*Page, error) {
 	return &Page{Title: title, Body: body}, nil
 }
 
-func downHandler(w http.ResponseWriter, r *http.Request, title string) {
+func MakebookDownHandler(w http.ResponseWriter, r *http.Request, title string) {
 
   booktitle := r.FormValue("booktitle")
 	w.Header().Set("Content-Type", "application/epub+zip")
@@ -95,11 +95,11 @@ func downHandler(w http.ResponseWriter, r *http.Request, title string) {
 	w.Write(bookdata);
 }
 
-func rootHandler(w http.ResponseWriter, r *http.Request, title string) {
+func MakebookRootHandler(w http.ResponseWriter, r *http.Request, title string) {
 	http.Redirect(w, r, "/form/", http.StatusFound)
 }
 
-func formHandler(w http.ResponseWriter, r *http.Request, title string) {
+func MakebookFormHandler(w http.ResponseWriter, r *http.Request, title string) {
 
   fmt.Println("formhandler");
 	p, err := loadPage("form")
@@ -116,33 +116,4 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-}
-
-const lenPath = len("/down/")
-
-var titleValidator = regexp.MustCompile("^[a-zA-Z0-9]+$")
-
-func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-
-    fmt.Println("Received path: "+r.URL.Path);
-
-		title := string("/")
-		if len(r.URL.Path) > lenPath {
-			title = r.URL.Path[lenPath:]
-		}
-	//	if !titleValidator.MatchString(title) {
-//			http.NotFound(w, r)
-//			return
-//		}
-		fn(w, r, title)
-	}
-}
-
-func main() {
-  fmt.Println("Registering handlers");
-	http.HandleFunc("/down/", makeHandler(downHandler))
-	http.HandleFunc("/form/", makeHandler(formHandler))
-	http.HandleFunc("/"     , makeHandler(rootHandler))
-	http.ListenAndServe(":80", nil)
 }
