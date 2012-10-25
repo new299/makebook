@@ -33,5 +33,8 @@ func main() {
 	http.HandleFunc("makebook.41j.com/down/", makeHandler(sites.MakebookDownHandler))
 	http.HandleFunc("makebook.41j.com/form/", makeHandler(sites.MakebookFormHandler))
 	http.HandleFunc("makebook.41j.com/"     , makeHandler(sites.MakebookRootHandler))
+	http.HandleFunc("graph.41j.com/down/"   , makeHandler(sites.GraphJSONDownHandler))
+	http.HandleFunc("graph.41j.com/graph/"  , makeHandler(sites.GraphJSONFormHandler))
+	http.HandleFunc("graph.41j.com/"        , makeHandler(sites.GraphJSONRootHandler))
 	http.ListenAndServe(":80", nil)
 }
