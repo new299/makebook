@@ -79,7 +79,7 @@ func GraphJSONFormHandler(w http.ResponseWriter, r *http.Request, title string) 
 	renderGraphTemplate(w, "graph", p)
 }
 
-var graphtemplates = template.Must(template.ParseFiles("graph.html"))
+var graphtemplates = template.Must(template.ParseFiles("html/graph.html"))
 
 func renderGraphTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	err := graphtemplates.ExecuteTemplate(w, tmpl+".html", p)

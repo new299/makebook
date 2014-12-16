@@ -96,7 +96,7 @@ func MakebookDownHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func MakebookRootHandler(w http.ResponseWriter, r *http.Request, title string) {
-	http.Redirect(w, r, "/form/", http.StatusFound)
+	http.Redirect(w, r, "html/form/", http.StatusFound)
 }
 
 func MakebookFormHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -109,7 +109,7 @@ func MakebookFormHandler(w http.ResponseWriter, r *http.Request, title string) {
 	renderTemplate(w, "form", p)
 }
 
-var templates = template.Must(template.ParseFiles("form.html"))
+var templates = template.Must(template.ParseFiles("html/form.html"))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	err := templates.ExecuteTemplate(w, tmpl+".html", p)
